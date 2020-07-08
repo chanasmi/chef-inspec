@@ -10,5 +10,5 @@ depends:
   - name: aws
     url: https://github.com/chanasmi/chef-inspec/tree/master/aws
 supports:
-  platform: os
+  platform: aws
 
