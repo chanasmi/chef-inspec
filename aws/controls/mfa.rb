@@ -1,26 +1,25 @@
 control "ec2-instance" do
   impact 0.7
   title 'Checks the compliance checks for ec2 instance'
-  # input('instance_ids').each do |i|
-  #     describe aws_ec2_instance(i) do
-  #        it { should exist }
-  #        #its('monitoring') { should eq state:'disabled' }
-  #        its('vpc_id') { should include 'vpc-' }
-  #         its('tags') { should include(key: 'Environment', value: 'dev') }
-  #       # # its('deletion_protection')     { should eq true }
-  #         its('image_id') { should eq 'ami-27a58d5c' }
-  #       #  #its('tenancy') { should eq 'default' }
-  #         its('instance_type') { should eq 't2.micro' }
-  #         its('public_ip_address') { should be_nil }
-  #       #  #its('ebs_encryption') { should eq true }
-  #     end
+  input('instance_ids').each do |i|
+      describe aws_ec2_instance(i) do
+         it { should exist }
+         its('vpc_id') { should include 'vpc-' }
+          its('tags') { should include(key: 'Environment', value: 'dev') }
+        
+          its('image_id') { should eq input('image_id') }
+        
+          its('instance_type') { should eq input('instance_type') }
+          its('public_ip_address') { should be_nil }
+        
+      end
     
-      # describe aws_security_group('sg-09d4b7a5dc72d2d11') do
-      #   it { should allow_in(port: 22, ipv4_range: '10.0.0.0/8') }
-      # end
-      # describe aws_ebs_volume(name: 'test-volume') do
-      #   it { should be_encrypted }
-      # end
+      describe aws_security_group(input('security_group')) do
+        it { should allow_in(port: 22, ipv4_range: '10.0.0.0/8') }
+      end
+      describe aws_ebs_volume(name: input('volume_name')) do
+        it { should be_encrypted }
+      end
       describe aws_s3_bucket(input('bucket')) do
         it { should exist }
         it { should_not be_public }
@@ -54,4 +53,4 @@ control "ec2-instance" do
   # describe bash('cat /etc/redhat-release') do
   #   its('stdout') { should include '8.1' }
   # end
-#end
+end
