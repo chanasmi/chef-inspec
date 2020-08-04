@@ -1,0 +1,12 @@
+instance_ids:
+  - i-000f5d3451f193764
+  - i-0f1c7034348a40b63 
+image_id:
+  - ami-27a58d5c
+instance_type:t2.micro
+security_group:
+  - sg-09d4b7a5dc72d2d11
+volume_name:
+  - test-volume    
+bucket:
+  - testasmi1212  
